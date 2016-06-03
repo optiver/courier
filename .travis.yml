@@ -5,8 +5,9 @@ go:
     - 1.6
 
 after_success:
+    - go install courier
     - bzip2 --keep bin/courier
-    - gzip -c bin/courier.bz2 > bin/courier.gz
+    - gzip -c bin/courier > bin/courier.gz
 
 deploy:
   provider: releases
