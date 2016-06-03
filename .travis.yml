@@ -7,7 +7,7 @@ go:
 script:
     - go test -v ./...
     - ls -lah
-    - go build -a courier
+    - GOPATH=`pwd` go build -a courier
     - bzip2 --keep courier
     - gzip -c courier > courier.gz
 
