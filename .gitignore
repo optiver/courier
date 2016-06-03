@@ -1,0 +1,4 @@
+/bin
+/pkg
+unit_test_results.xml
+.virtualenv

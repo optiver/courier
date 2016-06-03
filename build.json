@@ -1,0 +1,12 @@
+{
+    "name": "courier",
+    "lang": "go",
+    "group": "TradingRiskDevelopment",
+    "test_path": "courier/...",
+    "vet_path": "courier...",
+    "binary": "courier",
+    "artifacts": [
+        "bin",
+        "unit_test_results.xml"
+    ]
+}
