@@ -6,7 +6,8 @@ go:
 
 script:
     - go test -v ./...
-    - go build -a .
+    - ls -lah
+    - go build -a courier
     - bzip2 --keep courier
     - gzip -c courier > courier.gz
 
