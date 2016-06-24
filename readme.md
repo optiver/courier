@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/optiver/courier.svg?branch=master)](https://travis-ci.org/optiver/courier)
+
 # Courier
 
 Courier is a simple source dependency manager written in go, but for use with
