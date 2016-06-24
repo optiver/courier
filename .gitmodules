@@ -1,3 +1,0 @@
-[submodule "trd_build_scripts"]
-	path = trd_build_scripts
-	url = ssh://git@git:7999/trdc/trd_build_scripts.git
