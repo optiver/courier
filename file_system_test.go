@@ -14,31 +14,31 @@ type createDirHashTest struct {
 
 var testsExpectedDifferent = []createDirHashTest{
 	//Folder with one file (empty)
-	{"../../test/filesystem/test_single_file", ""},
+	{"./test/filesystem/test_single_file", ""},
 	//Folder with one file (not empty)
-	{"../../test/filesystem/test_single_file_nonempty", ""},
+	{"./test/filesystem/test_single_file_nonempty", ""},
 	//Folder with multiple files
-	{"../../test/filesystem/test_multiple_files", ""},
+	{"./test/filesystem/test_multiple_files", ""},
 	//Test presence of subfolder (one file)
-	{"../../test/filesystem/test_subfolder", ""},
+	{"./test/filesystem/test_subfolder", ""},
 	//Test the ignore feature (pt1)
-	{"../../test/filesystem/test_ignored_folder", ""},
+	{"./test/filesystem/test_ignored_folder", ""},
 	//Test the ignore feature (pt2)
-	{"../../test/filesystem/test_ignored_folder", "ignored"},
+	{"./test/filesystem/test_ignored_folder", "ignored"},
 	//Test the ignore feature where ignored folder is in subfolder (pt1)
-	{"../../test/filesystem/test_ignored_subfolder", ""},
+	{"./test/filesystem/test_ignored_subfolder", ""},
 	//Test the ignore feature where ignored folder is in subfolder (pt2)
-	{"../../test/filesystem/test_ignored_subfolder", "ignored"},
+	{"./test/filesystem/test_ignored_subfolder", "ignored"},
 }
 
 var testsExpectedSame = [][]createDirHashTest{
 	{ //Test different paths to same folders have the same hash
-		{"../../test/filesystem/test_different_paths/a", ""},
-		{"../../test/filesystem/test_different_paths/b", ""},
+		{"./test/filesystem/test_different_paths/a", ""},
+		{"./test/filesystem/test_different_paths/b", ""},
 	},
 	{ //Test changes inside ignored folder
-		{"../../test/filesystem/test_ignored_folder_changes/a", "ignored"},
-		{"../../test/filesystem/test_ignored_folder_changes/b", "ignored"},
+		{"./test/filesystem/test_ignored_folder_changes/a", "ignored"},
+		{"./test/filesystem/test_ignored_folder_changes/b", "ignored"},
 	},
 }
 
@@ -85,11 +85,11 @@ func TestCreateDirHashExpectSame(t *testing.T) {
 }
 
 func TestCreateDirHashPermissions(t *testing.T) {
-	infoNoX, err := os.Stat("../../test/filesystem/test-x/file1")
+	infoNoX, err := os.Stat("./test/filesystem/test-x/file1")
 	if err != nil {
 		t.Errorf("CreateDirHash: %v", err)
 	}
-	infoWithX, err := os.Stat("../../test/filesystem/test+x/file1")
+	infoWithX, err := os.Stat("./test/filesystem/test+x/file1")
 	if err != nil {
 		t.Errorf("CreateDirHash: %v", err)
 	}
@@ -98,11 +98,11 @@ func TestCreateDirHashPermissions(t *testing.T) {
 	if infoNoX.Mode() == infoWithX.Mode() {
 		t.Logf("Detected that execution bits are not supported; skipping test.")
 	} else {
-		hashNoX, err := CreateDirHash("../../test/filesystem/test-x", "")
+		hashNoX, err := CreateDirHash("./test/filesystem/test-x", "")
 		if err != nil {
 			t.Errorf("CreateDirHash: %q: Error: %v", "test-x", err)
 		}
-		hashWithX, err := CreateDirHash("../../test/filesystem/test+x", "")
+		hashWithX, err := CreateDirHash("./test/filesystem/test+x", "")
 		if err != nil {
 			t.Errorf("CreateDirHash: %q: Error: %v", "test+x", err)
 		}
