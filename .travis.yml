@@ -3,21 +3,31 @@ language: go
 
 go:
     - 1.6
+    - 1.7
 
 script:
     - go test -v ./...
-    - GOPATH=`pwd` go build -a -o bin/courier courier
-    - mkdir pkg/
-    - bzip2 -c bin/courier > bin/courier.bz2
-    - gzip -c bin/courier > bin/courier.gz
+
+    - GOOS=linux GOARCH=amd64 go build -a -o bin-linux-amd64/courier .
+    - cd bin-linux-amd64 && tar -czvf ../courier-linux-amd64.tar.gz courier; cd -
+
+    - GOOS=windows GOARCH=amd64 go build -a -o bin-windows-amd64/courier.exe .
+    - cd bin-windows-amd64 && zip ../courier-windows-amd64.zip courier.exe; cd -
+
+    - GOOS=darwin GOARCH=amd64 go build -a -o bin-darwin-amd64/courier .
+    - cd bin-darwin-amd64 && tar -czvf ../courier-darwin-amd64.tar.gz courier; cd -
 
 deploy:
-  provider: releases
-  skip_cleanup: true
-  api_key:
-    secure: HFzYRhe9ELhK2MKbVDt0otaoKiPJWTVwXJfxW2HQGl9BabkP9fDnzEWQc3HAV342EFP1xqiOQiD8sl8O6WHwixg7jnvMXYkpR3ML+a6s2WVSPYfr8hiZnss61Vcp5xOpCr/0r1RI1b2ZwCSnIJfvbJ7jznkS0fZrkbcSS8mvYgqvFq08DcfYckk2EJioPu+Lq/DFUhOARZ+yDSd4ydClQi3GKE/XNsC1JY6TxHCtiALZKe90oPSEvIJhiCo5WoJym4jyMf8XFGVXE9zFYYfmQj76TWCaEwJhFp+EmlCNK3m4s9L9tBdxcwRr4rgXqJbJnCRHFjvVTetsXMnavTDpuUwxZzvct+ArVCuArNcecyu5N+RIOmlb0/ogavZv9yyjEereU3bw0x20AihoJ2cyzOoJ4MHzUzWjUaUYrD2HiFmf2opGQ5U3MyJRnl2iX5tPByQ0myIztKKSDsforB3hMJrI/5HjF4LB0DnOrmemO+ZZmVbuGAOqX9XTd/ssCPTLZJqoTJB+/zPnvd9SGV/AMRkEjjefCsvGQbQWKtYeZ7k4axYSBfj8pvbci6FCW+WqJ13mgWXDATORNW8YSmhWZG5odmW4yZ5l9ZoDv4mLJzejtKCZYi2Jnv12W885QgnIbhcGyKTEiTLF6x0OqjaOagFx9UD8a08gQMu4nDJyDIo=
-  file:
-      - bin/courier.gz
-      - bin/courier.bz2
-  on:
-    repo: optiver/courier
+    provider: releases
+    skip_cleanup: true
+    api_key:
+        secure: HFzYRhe9ELhK2MKbVDt0otaoKiPJWTVwXJfxW2HQGl9BabkP9fDnzEWQc3HAV342EFP1xqiOQiD8sl8O6WHwixg7jnvMXYkpR3ML+a6s2WVSPYfr8hiZnss61Vcp5xOpCr/0r1RI1b2ZwCSnIJfvbJ7jznkS0fZrkbcSS8mvYgqvFq08DcfYckk2EJioPu+Lq/DFUhOARZ+yDSd4ydClQi3GKE/XNsC1JY6TxHCtiALZKe90oPSEvIJhiCo5WoJym4jyMf8XFGVXE9zFYYfmQj76TWCaEwJhFp+EmlCNK3m4s9L9tBdxcwRr4rgXqJbJnCRHFjvVTetsXMnavTDpuUwxZzvct+ArVCuArNcecyu5N+RIOmlb0/ogavZv9yyjEereU3bw0x20AihoJ2cyzOoJ4MHzUzWjUaUYrD2HiFmf2opGQ5U3MyJRnl2iX5tPByQ0myIztKKSDsforB3hMJrI/5HjF4LB0DnOrmemO+ZZmVbuGAOqX9XTd/ssCPTLZJqoTJB+/zPnvd9SGV/AMRkEjjefCsvGQbQWKtYeZ7k4axYSBfj8pvbci6FCW+WqJ13mgWXDATORNW8YSmhWZG5odmW4yZ5l9ZoDv4mLJzejtKCZYi2Jnv12W885QgnIbhcGyKTEiTLF6x0OqjaOagFx9UD8a08gQMu4nDJyDIo=
+    file:
+        - courier-linux-amd64.tar.gz
+        - courier-darwin-amd64.tar.gz
+        - courier-windows-amd64.zip
+    on:
+        repo: optiver/courier
+        condition:
+            tags: true
+            go: '1.7'

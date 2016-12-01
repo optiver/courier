@@ -2,8 +2,14 @@
 
 # Courier
 
-Courier is a simple source dependency manager written in go, but for use with
-any language (or even for non-programming projects!).
+Courier is a simple way of organising and fetching external source code into a
+project.
+
+It lets you define a manifest of paths to dependencies. It will fetch
+dependencies and organise them in your project. Dependencies can be pinned to a
+revision, and subdirectories of the project can be referenced.
+
+This is useful for projects that have source-level dependencies, build 
 
 Dependencies are defined in a `deps.json` file, e.g.
 
@@ -21,9 +27,9 @@ Dependencies are defined in a `deps.json` file, e.g.
 ## How to use
 
 1. Create a `deps.json`.
-2. Run `courier` from your shell.
+2. Run `courier`.
 3. Check-in `deps.json` and `pins.json` (created by courier)
-4. To obtain the exact same dependencies later, run `courier -reproduce`.
+4. To obtain the exact same dependencies later, run `courier --reproduce`.
 
 ## Installing
 
@@ -34,7 +40,7 @@ TODO - do releases from github.
 ### From Source
 
 ```bash
-$ go install courier
+$ go get github.com/optiver/courier
 ```
 
 Copy the binary (named `bin/courier` in Linux or `bin/courier.exe` in Windows)
